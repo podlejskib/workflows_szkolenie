@@ -1,0 +1,35 @@
+name: dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        type: choice
+        default: info
+        options:
+          - debug
+          - info
+          - warning
+          - error
+      ENVIRONMENT:
+        description: 'Environment'
+        required: true
+        type: environment
+      TAGS:
+        description: 'Tags'
+        required: false
+        type: string
+
+jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+     run: |
+       echo "Log level: $LEVEL"
+       echo "Tags: $TAGS"
+       echo "Environment: $ENVIRONMENT"
+     env:
+       LEVEL: ${{ inputs.logLevel }}
+       TAGS: ${{ inputs.tags }}
+       ENVIRONMENT: ${{ inputs.environment }}
