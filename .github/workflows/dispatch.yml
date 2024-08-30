@@ -20,10 +20,17 @@ on:
         description: 'Tags'
         required: false
         type: string
+      matrix:
+        description: 'Matrix'
+        required: true
+        type: string
 
 jobs:
   log-the-inputs:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ${{ fromJSON(needs.dispatch.inputs.matrix)}}
     steps:
       - name: Log the inputs
         run: |
